@@ -1,7 +1,4 @@
 #!/bin/sh /etc/rc.common
-#QQ:183130227
-#Url:http://bbs.scjxsw.com
-#日期20140714
 
 START=65
 
