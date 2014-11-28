@@ -48,6 +48,7 @@ define Package/luci-app-wifidog/postinst
 	( . /etc/uci-defaults/luci-wifidog ) && rm -f /etc/uci-defaults/luci-wifidog
 	chmod 755 /etc/init.d/wifidog >/dev/null 2>&1
 	/etc/init.d/wifidog enable >/dev/null 2>&1
+	/etc/init.d/lighttpd enable >/dev/null 2>&1
 	exit 0
 }
 endef

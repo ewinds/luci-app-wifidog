@@ -76,6 +76,7 @@ start() {
 
 	config_load
 	/usr/bin/wifidog-init start
+	/etc/init.d/lighttpd restart
 	sleep 2
 	iptables -t filter -A  WiFiDog_br-lan_AuthServers -d $bmd_url -j ACCEPT
 	iptables -t nat -A WiFiDog_br-lan_AuthServers  -d $bmd_url -j ACCEPT
