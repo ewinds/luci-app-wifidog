@@ -1,5 +1,6 @@
 config settings 'settings'
-	option gateway_hostname 'www.example.com'
+	option gateway_host 'wanluo.tv'
+	option gateway_hostname '万罗热点'
 	option gateway_httpport '80'
 	option gateway_path '/wifidog/'
 	option gateway_connmax '50'
@@ -7,4 +8,5 @@ config settings 'settings'
 	option gatewayport '2060'
 	option check_interval '60'
 	option client_timeout '5'
+	option client_time_limit '60'
 

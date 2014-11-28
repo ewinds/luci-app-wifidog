@@ -7,34 +7,31 @@ EXTRA_HELP="        status Print the status of the service"
 
 config_load()
 {
-	wifidog_enable=$(uci get wifidog.@wifidog[0].wifidog_enable)
+	wifidog_enable=$(uci get wifidog.settings.wifidog_enable)
 	[ "$wifidog_enable" -eq 0 ] && stop && exit 0
-				/usr/bin/wifidog-init stop
-				sleep 1
+	/usr/bin/wifidog-init stop
+	sleep 1
 
-        rm -f /etc/wifidog.conf
-        gateway_id=$(uci get wifidog.@wifidog[0].gateway_id)
-        gateway_interface=$(uci get wifidog.@wifidog[0].gateway_interface) 
-        gateway_eninterface=$(uci get wifidog.@wifidog[0].gateway_eninterface)
-        gateway_hostname=$(uci get wifidog.@wifidog[0].gateway_hostname) 
-        gateway_httpport=$(uci get wifidog.@wifidog[0].gateway_httpport) 
-        gateway_path=$(uci get wifidog.@wifidog[0].gateway_path) 
-        gateway_connmax=$(uci get wifidog.@wifidog[0].gateway_connmax) 
-        ssl_enable=$(uci get wifidog.@wifidog[0].ssl_enable) 
-	check_interval=$(uci get wifidog.@wifidog[0].check_interval)
-	client_timeout=$(uci get wifidog.@wifidog[0].client_timeout)
-	sslport=$(uci get wifidog.@wifidog[0].sslport)
-	deamo_enable=$(uci get wifidog.@wifidog[0].deamo_enable)
-	gatewayport=$(uci get wifidog.@wifidog[0].gatewayport)
-	myz_mac=$(uci get wifidog.@wifidog[0].myz_mac)
-	bmd_url=$(uci get wifidog.@wifidog[0].bmd_url) 
+    rm -f /etc/wifidog.conf
+    gateway_interface=$(uci get wifidog.settings.gateway_interface) 
+    gateway_eninterface=$(uci get wifidog.settings.gateway_eninterface)
+    gateway_host=$(uci get wifidog.settings.gateway_host) 
+    gateway_httpport=$(uci get wifidog.settings.gateway_httpport) 
+    gateway_path=$(uci get wifidog.settings.gateway_path) 
+    gateway_connmax=$(uci get wifidog.settings.gateway_connmax) 
+    ssl_enable=$(uci get wifidog.settings.ssl_enable) 
+	check_interval=$(uci get wifidog.settings.check_interval)
+	client_timeout=$(uci get wifidog.settings.client_timeout)
+	sslport=$(uci get wifidog.settings.sslport)
+	deamo_enable=$(uci get wifidog.settings.deamo_enable)
+	gatewayport=$(uci get wifidog.settings.gatewayport)
+	myz_mac=$(uci get wifidog.settings.myz_mac)
+	bmd_url=$(uci get wifidog.settings.bmd_url) 
               
 echo "
-GatewayID $gateway_id
 GatewayInterface $gateway_interface
-ExternalInterface $gateway_eninterface
 AuthServer {
-	Hostname $gateway_hostname
+	Hostname $gateway_host
 	SSLAvailable $ssl_enable
 	SSLPort $sslport
 	HTTPPort $gateway_httpport
