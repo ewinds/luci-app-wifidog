@@ -34,7 +34,7 @@ for _, e in ipairs(sys.net.devices()) do
 end
 	
 	gateway_host = s:taboption("jbsz",Value,"gateway_host","认证站点地址","域名或者IP")
-	offline_enable = s.taboption("jbsz", Flag, "offline_enable", "启用离线认证", "本地内建认证服务器")
+	offline_enable = s:taboption("jbsz", Flag, "offline_enable", translate("启用离线认证"), "本地内建认证服务器")
 	offline_enable.rmempty = false
 	gateway_hostname = s:taboption("jbsz",Value,"gateway_hostname","认证站点名称","显示在标题栏上的内容")
 	gateway_hostname:depends("offline_enable", "1")
