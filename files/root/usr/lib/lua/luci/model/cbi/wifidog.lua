@@ -34,7 +34,10 @@ for _, e in ipairs(sys.net.devices()) do
 end
 	
 	gateway_host = s:taboption("jbsz",Value,"gateway_host","认证站点地址","域名或者IP")
+	offline_enable = s.taboption("jbsz", Flag, "offline_enable", "启用离线认证", "本地内建认证服务器")
+	offline_enable.rmempty = false
 	gateway_hostname = s:taboption("jbsz",Value,"gateway_hostname","认证站点名称","显示在标题栏上的内容")
+	gateway_hostname:depends("offline_enable", "1")
 	gatewayport = s:taboption("gjsz",Value,"gatewayport","认证网关端口号","默认端口号2060")
 	gateway_httpport = s:taboption("gjsz",Value,"gateway_httpport","HTTP端口号","默认80端口")
 	gateway_path = s:taboption("gjsz",Value,"gateway_path","认证服务器路径","最后要加/，例如：'/'，'/wifidog/'")
@@ -46,6 +49,7 @@ end
 	client_timeout.default = "5"
 	client_time_limit = s:taboption("gjsz",Value,"client_time_limit","客户端限额","接入客户端限制使用时间，默认60分")
 	client_time_limit.default = "60"
+	client_time_limit:depends("offline_enable", "1")
 							--[白名单]--
     bmd_url=s:taboption("bmd",Value,"bmd_url","网站URL白名单","url不认证也能打开，不能带”http://“多个URL请用”,“号隔开。如：“www.baidu.com,www.qq.com”")
 	myz_mac=s:taboption("bmd",Value,"myz_mac","免认证设备","填入设备的MAC地址，多个设备请用“,”号隔开。如：“11:22:33:44:55:66,aa:bb:cc:dd:ff:00”")

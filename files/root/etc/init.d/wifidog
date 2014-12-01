@@ -8,6 +8,7 @@ EXTRA_HELP="        status Print the status of the service"
 config_load()
 {
 	wifidog_enable=$(uci get wifidog.settings.wifidog_enable)
+	offline_enable=$(uci get wifidog.settings.offline_enable)
 	[ "$wifidog_enable" -eq 0 ] && stop && exit 0
 	/usr/bin/wifidog-init stop
 	sleep 1
@@ -76,7 +77,7 @@ start() {
 
 	config_load
 	/usr/bin/wifidog-init start
-	/etc/init.d/lighttpd restart
+	[ "$offline_enable" -eq 1 ] && /etc/init.d/lighttpd start
 	sleep 2
 	iptables -t filter -A  WiFiDog_br-lan_AuthServers -d $bmd_url -j ACCEPT
 	iptables -t nat -A WiFiDog_br-lan_AuthServers  -d $bmd_url -j ACCEPT
@@ -84,6 +85,7 @@ start() {
 
 stop() {
 	/usr/bin/wifidog-init stop
+	/etc/init.d/lighttpd stop
 }
 
 status() {
