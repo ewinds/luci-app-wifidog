@@ -85,6 +85,7 @@ start() {
 
 stop() {
 	/usr/bin/wifidog-init stop
+	sleep 2
 	/etc/init.d/lighttpd stop
 }
 

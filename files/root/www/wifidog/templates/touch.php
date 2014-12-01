@@ -100,9 +100,9 @@
 
             var swipeBanners = new Swipe($('#slider')[0], {
                 callback: function(index, e) {
-                    var amount = $('.swipe-wrap div').length;
+                    var amount = $('.swipe-wrap div').length / 2;
                     $('.redbar li').css({
-                        'left': 320 * index / amount,
+                        'left': 320 * (index % amount) / amount,
                         'width': 320 / amount
                     });
                 },
