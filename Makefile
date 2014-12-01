@@ -31,6 +31,7 @@ endef
 
 define Package/luci-app-wifidog/install
 	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DIR) $(1)/etc/lighttpd
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_DIR) $(1)/etc/uci-defaults
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
