@@ -9,7 +9,10 @@ config_load()
 {
 	wifidog_enable=$(uci get wifidog.settings.wifidog_enable)
 	offline_enable=$(uci get wifidog.settings.offline_enable)
-	[ "$wifidog_enable" -eq 0 ] && stop && exit 0
+	if [[ "$wifidog_enable" -eq 0 ]]; then
+		stop
+		exit 0
+	else
 	/usr/bin/wifidog-init stop
 	sleep 1
 
@@ -69,7 +72,7 @@ FirewallRuleSet locked-users {
     FirewallRule block to 0.0.0.0/0
 }
 " >> /etc/wifidog.conf
-
+	fi
 }
   
 start() {	
@@ -84,7 +87,10 @@ start() {
 }
 
 stop() {
-	/usr/bin/wifidog-init stop
+	if /usr/bin/wifidog-init status 2> /dev/null 
+	then
+		/usr/bin/wifidog-init stop
+	fi
 	sleep 2
 	/etc/init.d/lighttpd stop
 }
