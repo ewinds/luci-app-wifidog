@@ -57,9 +57,10 @@ $app->get('/portal', function() use ($app) {
 $app->get('/portal/touch', function() use ($app) {
 	$db = $app->dao;
 	$uuid = $app->uuid;
+	$id = $app->uuid;
 	$offset = $app->timeLimit;
-	$db->exec("INSERT INTO connections (token, expires_on)
-					VALUES ('{$uuid}', datetime(datetime('now','localtime'), '+{$offset} minutes'))");
+	$db->exec("INSERT INTO connections (id, token, expires_on)
+					VALUES ('{$id}', '{$uuid}', datetime(datetime('now','localtime'), '+{$offset} minutes'))");
 	$db = null;
 	$app->redirect("http://{$app->gwAddress}:{$app->gwPort}/wifidog/auth?token={$uuid}");
 });
@@ -92,7 +93,7 @@ $app->get('/auth', function () use ($app) {
 					$auth = 6;
 				} else {
 					# Login normal
-					$db->exec("UPDATE connections SET used_on = datetime('now', 'localtime'), updated_at = datetime('now', 'localtime') WHERE id = {$connection['id']}");
+					$db->exec("UPDATE connections SET used_on = datetime('now', 'localtime'), updated_at = datetime('now', 'localtime') WHERE id = '{$connection['id']}'");
 					$auth = 1;
 				}
 				
@@ -102,15 +103,14 @@ $app->get('/auth', function () use ($app) {
 				$expires_on = $connection['expires_on'];
 
 				if ($expires_on == '' || strtotime($expires_on) > strtotime('now')) {
-					$db->exec("UPDATE connections SET ip = '{$ip}', mac = '{$mac}', incoming_bytes = {$incoming}, outgoing_bytes = {$outgoing}, updated_at = datetime('now', 'localtime') WHERE id = {$connection['id']}");
-					echo 'updated';
+					$db->exec("UPDATE connections SET ip = '{$ip}', mac = '{$mac}', incoming_bytes = {$incoming}, outgoing_bytes = {$outgoing}, updated_at = datetime('now', 'localtime') WHERE id = '{$connection['id']}'");
 					$auth = 1;
 				}
 
 				break;
 			
 			case 'logout':
-				$db->exec("UPDATE connections SET expires_on = datetime('now', 'localtime'), updated_at = datetime('now', 'localtime') WHERE id = {$connection['id']}");
+				$db->exec("UPDATE connections SET expires_on = datetime('now', 'localtime'), updated_at = datetime('now', 'localtime') WHERE id = '{$connection['id']}'");
 				break;
 			
 			default:
@@ -168,7 +168,7 @@ $app->dao = function () use ($app) {
 						updated_at DATETIME DEFAULT (datetime('now','localtime')))");
 
 			$db->exec("CREATE TABLE IF NOT EXISTS connections (
-						id INTEGER PRIMARY KEY AUTOINCREMENT,
+						id VARCHAR(255) PRIMARY KEY,
 						token VARCHAR(255),
 						expires_on DATETIME,
 						used_on DATETIME,
