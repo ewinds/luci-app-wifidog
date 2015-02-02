@@ -7,5 +7,6 @@ This package contains LuCI configuration pages for wifidog.
 3. Sync with remote server
 
 ## Install
-1. Git clone this respository in your `package` directory
-2. `make menuconfig` and select luci-app-wifidog in LUCI category
+1. Git clone this respository in your `package` directory.
+2. `make menuconfig` and select luci-app-wifidog in LUCI category and save.
+3. `make luci-app-wifidog/compile` with a single package. 
